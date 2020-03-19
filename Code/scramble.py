@@ -32,5 +32,7 @@ def join(ar):
     text = "  ".join(final)
     return text
 
-s = scramble_replace(scramble_gen())
-print(join(valid(s)))
+def call():
+    s = scramble_replace(scramble_gen())
+    scramble = join(valid(s))
+    return scramble
