@@ -1,31 +1,33 @@
 import tkinter as tk
 import scramble
+import time
 
-cubeTime = 0.00
 timing = False
 
+startTime = 0
+endTime = 0
+
 def startTimer(event):
-    global timing, cubeTime
-    timing = True
-    cubeTime = 0.00
-    window.bind("<space>", stopTimer)
+    global timing, startTime
     
-    def start():
-        if timing == True:
-            global cubeTime
-            cubeTime += 0.01
-            timeLbl.config(text = round(cubeTime, 3))
-            timeLbl.after(10, start)
-    start()
+    timing = True
+    if timing == True:
+        startTime = time.time()
+        window.bind("<space>", stopTimer)
+        timeLbl.config(text = "Solve")
 
 def stopTimer(event):
-    global timing
+    global timing, endTime
+
+    endTime = time.time()
     timing= False
+    timeLbl.config(text = round(endTime - startTime, 3))
+    scrambler()
     window.bind("<space>", startTimer)
 
 window = tk.Tk()
 window.title("Cube Timer")
-window.iconbitmap("icon.ico")
+#window.iconbitmap("icon.ico")
 
 w = window.winfo_screenwidth()
 h = window.winfo_screenheight()
@@ -36,10 +38,10 @@ window.state("zoomed")
 #Scarmble label
 scramble_Text = tk.StringVar()
 scrambleLbl = tk.Label(window, textvariable = scramble_Text, font = ("Calibri", 30))
-scrambleLbl.place(relx = 0.16)
+scrambleLbl.place(relx = 0.5, rely = 0.03, anchor="center")
 
 #Time label
-timeLbl = tk.Label(window, text = round(cubeTime, 3), font = ("Calibri", 100))
+timeLbl = tk.Label(window, text = "0.00", font = ("Calibri", 100))
 timeLbl.place(relx = 0.4, rely = 0.36)
 
 #Calling the scramble generator
