@@ -11,17 +11,24 @@ def startTimer(event):
     global timing, startTime
     
     timing = True
-    if timing == True:
-        startTime = time.time()
-        window.bind("<space>", stopTimer)
-        timeLbl.config(text = "Solve")
+    startTime = time.time()
+    window.bind("<space>", stopTimer)
+
+    def update():
+        if timing == True:
+            currentTime = time.time()
+            print(round(currentTime - startTime, 2))
+            timeVar.set(round(currentTime - startTime, 2))
+            timeLbl.after(1, update)
+    
+    update()
 
 def stopTimer(event):
     global timing, endTime
 
     endTime = time.time()
     timing= False
-    timeLbl.config(text = round(endTime - startTime, 3))
+    timeVar.set(round(endTime - startTime, 2))
     scrambler()
     window.bind("<space>", startTimer)
 
@@ -41,8 +48,11 @@ scrambleLbl = tk.Label(window, textvariable = scramble_Text, font = ("Calibri", 
 scrambleLbl.place(relx = 0.5, rely = 0.03, anchor="center")
 
 #Time label
-timeLbl = tk.Label(window, text = "0.00", font = ("Calibri", 100))
-timeLbl.place(relx = 0.4, rely = 0.36)
+timeVar = tk.StringVar()
+timeLbl = tk.Label(window, textvariable = timeVar, font = ("Calibri", 100), fg = "Black")
+timeLbl.place(relx = 0.5, rely = 0.5, anchor="center")
+timeVar.set("0.00")
+
 
 #Calling the scramble generator
 def scrambler():
@@ -52,7 +62,7 @@ scrambler()
 
 #Btn for generating new scramble
 btn1 = tk.Button(window, text = "New scramble", command = scrambler, font = ("Calibri", 20))
-btn1.place(relx = 0.43, rely = 0.07)
+btn1.place(relx = 0.5, rely = 0.1, anchor="center")
 
 window.bind("<space>", startTimer)
 
