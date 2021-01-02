@@ -7,6 +7,11 @@ timing = False
 startTime = 0
 endTime = 0
 
+def writeToFile(time):
+    f = open("time.txt", "a")
+    f.write(f"{str(time)}\n")
+    f.close()
+
 def startTimer(event):
     global timing, startTime
     
@@ -17,7 +22,7 @@ def startTimer(event):
     def update():
         if timing == True:
             currentTime = time.time()
-            print(round(currentTime - startTime, 2))
+            #print(round(currentTime - startTime, 2))
             timeVar.set(round(currentTime - startTime, 2))
             timeLbl.after(1, update)
     
@@ -27,8 +32,10 @@ def stopTimer(event):
     global timing, endTime
 
     endTime = time.time()
-    timing= False
-    timeVar.set(round(endTime - startTime, 2))
+    timing = False
+    finalTime = round(endTime - startTime, 2)
+    timeVar.set(finalTime)
+    writeToFile(finalTime)
     scrambler()
     window.bind("<space>", startTimer)
 
