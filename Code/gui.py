@@ -42,7 +42,7 @@ def stopTimer(event):
 
 window = tk.Tk()
 window.title("Cube Timer")
-window.iconbitmap(f"{os.getcwd()}\Code\icon.ico")
+window.iconbitmap(f"{os.getcwd()}\\Code\\icon.ico")
 
 w = window.winfo_screenwidth()
 h = window.winfo_screenheight()
