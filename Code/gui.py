@@ -1,6 +1,7 @@
 import tkinter as tk
 import scramble
 import time
+import os
 
 timing = False
 
@@ -41,7 +42,7 @@ def stopTimer(event):
 
 window = tk.Tk()
 window.title("Cube Timer")
-#window.iconbitmap("icon.ico")
+window.iconbitmap(f"{os.getcwd()}\Code\icon.ico")
 
 w = window.winfo_screenwidth()
 h = window.winfo_screenheight()
